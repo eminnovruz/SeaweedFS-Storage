@@ -36,7 +36,7 @@ namespace FileServer_Asp.Services
         {
             try
             {
-                var url = $"{_config.MasterUrl}/{filePath}";
+                var url = $"{_config.MasterUrl}/submit";
                 using var contentStream = new ByteArrayContent(content);
                 var formData = new MultipartFormDataContent
                 {
