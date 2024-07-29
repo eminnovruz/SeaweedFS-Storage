@@ -26,6 +26,7 @@ namespace FileServer_Asp.Controllers
             }
 
             var filePath = fileModel.File.FileName;
+
             using (var stream = new MemoryStream())
             {
                 await fileModel.File.CopyToAsync(stream);
@@ -45,14 +46,22 @@ namespace FileServer_Asp.Controllers
         [HttpGet("download/{fileName}")]
         public async Task<IActionResult> DownloadFile(string fileName)
         {
-            var fileData = await _fileService.ReadFileAsync(fileName);
-
-            if (fileData == null)
+            try
             {
-                return NotFound("File not found.");
-            }
+                var fileData = await _fileService.ReadFileAsync(fileName);
 
-            return File(fileData, "application/octet-stream", fileName);
+                if (fileData == null)
+                {
+                    return NotFound("File not found.");
+                }
+
+                return File(fileData, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving file: {ex.Message}");
+            }
         }
+
     }
 }
