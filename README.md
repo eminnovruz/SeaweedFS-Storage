@@ -1,6 +1,5 @@
 # SeaweedFS .NET Integration
 
-![SeaweedFS Logo](https://www.google.com/url?sa=i&url=https%3A%2F%2Fgithub.com%2Fseaweedfs%2Fseaweedfs&psig=AOvVaw3RRbEjr3ixgH72LUFhEvap&ust=1722323939899000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCIDFruTay4cDFQAAAAAdAAAAABAR)
 
 ## Overview
 This project integrates SeaweedFS with a .NET application. SeaweedFS is a distributed file system designed for high scalability and efficiency.
