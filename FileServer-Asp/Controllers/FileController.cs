@@ -20,26 +20,14 @@ namespace FileServer_Asp.Controllers
         [HttpPost("upload")]
         public async Task<IActionResult> UploadFile([FromForm] FileModel fileModel)
         {
-            if (fileModel.File == null || fileModel.File.Length == 0)
+            try
             {
-                return BadRequest("No file uploaded.");
+                return Ok();
             }
-
-            var filePath = fileModel.File.FileName;
-
-            using (var stream = new MemoryStream())
+            catch (Exception)
             {
-                await fileModel.File.CopyToAsync(stream);
-                var result = await _fileService.WriteFileAsync(filePath, stream.ToArray());
 
-                if (result)
-                {
-                    return Ok(new { filePath });
-                }
-                else
-                {
-                    return StatusCode(500, "Error saving file.");
-                }
+                throw;
             }
         }
 
@@ -48,18 +36,11 @@ namespace FileServer_Asp.Controllers
         {
             try
             {
-                var fileData = await _fileService.ReadFileAsync(fileName);
-
-                if (fileData == null)
-                {
-                    return NotFound("File not found.");
-                }
-
-                return File(fileData, "application/octet-stream", fileName);
+                return Ok(await _fileService.ReadFileAsync(fileName));
             }
-            catch (Exception ex)
+            catch (Exception exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Error retrieving file: {ex.Message}");
+                throw new ArgumentNullException(exception.Message);
             }
         }
 
