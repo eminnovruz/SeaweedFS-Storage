@@ -38,7 +38,7 @@ namespace FileServer_Asp.Services
             }
 
             AssignModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
-            string assignedUrl = assign.PublicUrl + "/" + assign.Fid;
+            string assignedUrl = "http://" + assign.PublicUrl + "/" + assign.Fid;
 
             using var content = new MultipartFormDataContent();
             using var stream = fileToUpload.File.OpenReadStream();
