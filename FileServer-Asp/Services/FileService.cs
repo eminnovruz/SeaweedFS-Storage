@@ -30,14 +30,14 @@ namespace FileServer_Asp.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> RemoveFileAsync(string fidId, string port)
+        public async Task<bool> RemoveFileAsync(string fidId)
         {
             if (string.IsNullOrWhiteSpace(fidId))
             {
                 throw new ArgumentNullException(nameof(fidId), "No Fid Id is provided.");
             }
 
-            string assignedUrl = $"{_config.HelperBaseUrl + port}/{fidId}";
+            string assignedUrl = $"{_config.HelperBaseUrl + "8080"}/{fidId}";
 
             HttpResponseMessage response = await _httpClient.DeleteAsync(assignedUrl);
 
@@ -53,8 +53,8 @@ namespace FileServer_Asp.Services
             }
 
             AssignModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
-            
-            string assignedUrl = "http://" + assign.PublicUrl + "/" + assign.Fid;
+
+            string assignedUrl = _config.HelperBaseUrl + fileToUpload.Port + "/" + assign.Fid;
 
             using var content = new MultipartFormDataContent();
             
