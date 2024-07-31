@@ -30,7 +30,23 @@ namespace FileServer_Asp.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> UploadFileAsync(FileModel fileToUpload)
+        public async Task<bool> RemoveFileAsync(string fidId)
+        {
+            if (string.IsNullOrWhiteSpace(fidId))
+            {
+                throw new ArgumentNullException(nameof(fidId), "No Fid Id is provided.");
+            }
+
+            string baseUrl = "http://26.155.54.126:8080";
+            string assignedUrl = $"{baseUrl}/{fidId}";
+
+            HttpResponseMessage response = await _httpClient.DeleteAsync(assignedUrl);
+
+            return response.IsSuccessStatusCode;
+        }
+
+
+        public async Task<AssignModel> UploadFileAsync(FileModel fileToUpload)
         {
             if(fileToUpload == null)
             {
@@ -38,20 +54,21 @@ namespace FileServer_Asp.Services
             }
 
             AssignModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
+            
             string assignedUrl = "http://" + assign.PublicUrl + "/" + assign.Fid;
 
             using var content = new MultipartFormDataContent();
+            
             using var stream = fileToUpload.File.OpenReadStream();
 
             var fileContent = new StreamContent(stream);
+            
             content.Add(fileContent, "myfile", fileToUpload.File.FileName);
             content.Add(new StringContent(fileToUpload.File.Length.ToString()), "fileLength");
 
             var response = await _httpClient.PostAsync(assignedUrl, content);
 
-            response.EnsureSuccessStatusCode();
-
-            return true;
+            return assign;
         }
     }
 }

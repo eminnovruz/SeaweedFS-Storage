@@ -44,5 +44,18 @@ namespace FileServer_Asp.Controllers
             }
         }
 
+        [HttpDelete("Delete/{fid}")]
+        public async Task<IActionResult> RemoveFile(string fid)
+        {
+            try
+            {
+                return Ok(await _fileService.RemoveFileAsync(fid));
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
+        }
+
     }
 }
