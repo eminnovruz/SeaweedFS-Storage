@@ -2,6 +2,6 @@
 
 public interface IFileService
 {
-    Task<bool> WriteFileAsync(string filePath, byte[] content);
-    Task<byte[]> ReadFileAsync(string filePath);
+    Task<bool> UploadFileAsync(IFormFile fileToUpload);
+    Task<string> ReadFileAsync(string fidId);
 }
