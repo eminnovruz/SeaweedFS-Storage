@@ -19,7 +19,7 @@ namespace FileServer_Asp.Controllers
         }
 
         [HttpPost("Upload")]
-        public async Task<IActionResult> UploadFile([FromForm] IFormFile fileToUpload)
+        public async Task<IActionResult> UploadFile([FromForm] FileModel fileToUpload)
         {
             try
             {
