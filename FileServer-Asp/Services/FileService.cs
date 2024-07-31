@@ -30,15 +30,14 @@ namespace FileServer_Asp.Services
             throw new NotImplementedException();
         }
 
-        public async Task<bool> RemoveFileAsync(string fidId)
+        public async Task<bool> RemoveFileAsync(string fidId, string port)
         {
             if (string.IsNullOrWhiteSpace(fidId))
             {
                 throw new ArgumentNullException(nameof(fidId), "No Fid Id is provided.");
             }
 
-            string baseUrl = "http://26.155.54.126:8080";
-            string assignedUrl = $"{baseUrl}/{fidId}";
+            string assignedUrl = $"{_config.HelperBaseUrl + port}/{fidId}";
 
             HttpResponseMessage response = await _httpClient.DeleteAsync(assignedUrl);
 
