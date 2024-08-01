@@ -5,6 +5,7 @@
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>FileServer_Asp</RootNamespace>
+    <UserSecretsId>48f8295f-3e88-4e87-805e-1d0b8030d068</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
