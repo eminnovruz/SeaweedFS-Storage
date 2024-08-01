@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using FileServer_Asp.Configurations;
 using FileServer_Asp.HelperServices;
@@ -7,6 +8,7 @@ using FileServer_Asp.JsonModels;
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 namespace FileServer_Asp.Services
 {
@@ -41,9 +43,18 @@ namespace FileServer_Asp.Services
 
             HttpResponseMessage response = await _httpClient.DeleteAsync(assignedUrl);
 
-            return response.IsSuccessStatusCode;
-        }
+            if (response.IsSuccessStatusCode)
+            {
+                Log.Information("File removed successfully - Assign Fid: " + fidId);
 
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
 
         public async Task<AssignModel> UploadFileAsync(FileModel fileToUpload)
         {
@@ -54,6 +65,11 @@ namespace FileServer_Asp.Services
 
             AssignModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
 
+            if(assign == null)
+            {
+                throw new ArgumentNullException();
+            }
+            
             string assignedUrl = _config.HelperBaseUrl + fileToUpload.Port + "/" + assign.Fid;
 
             using var content = new MultipartFormDataContent();
@@ -66,6 +82,10 @@ namespace FileServer_Asp.Services
             content.Add(new StringContent(fileToUpload.File.Length.ToString()), "fileLength");
 
             var response = await _httpClient.PostAsync(assignedUrl, content);
+
+            response.EnsureSuccessStatusCode();
+
+            Log.Information("File uploaded successfully - Assign Fid: " + assign.Fid);
 
             return assign;
         }
