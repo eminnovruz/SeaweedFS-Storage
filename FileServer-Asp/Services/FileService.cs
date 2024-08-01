@@ -1,10 +1,12 @@
 ﻿using FileServer_Asp.Configurations.SeaweedFs;
+using FileServer_Asp.Entities;
 using FileServer_Asp.HelperServices;
 using FileServer_Asp.JsonModels;
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
 using Microsoft.Extensions.Options;
 using Serilog;
+using System.Text.Json;
 
 namespace FileServer_Asp.Services
 {
@@ -30,6 +32,13 @@ namespace FileServer_Asp.Services
         public Task<string> ReadFileAsync(string fidId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<string> ReadFileViaSecretNameAsync(string secret)
+        {
+            AssignEntity assign = await _registerService.ViewFileViaSecretName(secret);
+
+            return assign.PublicUrl + "/" + assign.Fid;
         }
 
         public async Task<bool> RemoveFileAsync(string fidId)
@@ -85,7 +94,7 @@ namespace FileServer_Asp.Services
 
             response.EnsureSuccessStatusCode();
 
-            await _registerService.RegisterFile(fileToUpload, assign.Fid);
+            await _registerService.RegisterFile(fileToUpload, assign.Fid, assign.PublicUrl);
 
             Log.Information("File uploaded successfully - Assign Fid: " + assign.Fid);
 

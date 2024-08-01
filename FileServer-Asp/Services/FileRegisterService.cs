@@ -17,7 +17,7 @@ public class FileRegisterService : IFileRegisterService
         _context = context;
     }
 
-    public async Task RegisterFile(FileModel fileToUpload, string fid)
+    public async Task RegisterFile(FileModel fileToUpload, string fid, string publicUrl)
     {
         FilterDefinition<AssignEntity> filter = Builders<AssignEntity>.Filter.Eq(a => a.SecretName, fileToUpload.SecretName);
 
@@ -32,11 +32,13 @@ public class FileRegisterService : IFileRegisterService
         {
             Id = Guid.NewGuid().ToString(),
             SecretName = fileToUpload.SecretName,
-            Fid = fid
+            Fid = fid,
+            PublicUrl = publicUrl
         };
 
         await _context.Assigns.InsertOneAsync(newEntity);
     }
+
 
 
     public async Task<AssignEntity> ViewFileViaSecretName(string secretName)

@@ -6,6 +6,6 @@ namespace FileServer_Asp.Services.Abstract;
 
 public interface IFileRegisterService
 {
-    public Task RegisterFile(FileModel fileToUpload, string fid);
+    public Task RegisterFile(FileModel fileToUpload, string fid, string publicUrl);
     public Task<AssignEntity> ViewFileViaSecretName(string secretName);
 }
