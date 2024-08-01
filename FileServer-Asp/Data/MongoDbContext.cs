@@ -1,4 +1,5 @@
 ﻿using FileServer_Asp.Configurations.MongoDb;
+using FileServer_Asp.Entities;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Serilog;
@@ -20,4 +21,5 @@ public class MongoDbContext
         Log.Information("Connected: " + settings.Value.DatabaseName);
     }
 
+    public IMongoCollection<AssignEntity> Assigns => _database.GetCollection<AssignEntity>("assigns");
 }

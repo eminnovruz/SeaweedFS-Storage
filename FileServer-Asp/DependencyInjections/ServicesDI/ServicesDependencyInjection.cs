@@ -1,11 +1,13 @@
-﻿using FileServer_Asp.Configurations.SeaweedFs;
+﻿using FileServer_Asp.Configurations.MongoDb;
+using FileServer_Asp.Configurations.SeaweedFs;
 using FileServer_Asp.Services;
 using FileServer_Asp.Services.Abstract;
 using Serilog;
+using System.Configuration;
 
-namespace FileServer_Asp.DependencyInjection;
+namespace FileServer_Asp.DependencyInjections;
 
-public static class ProjectDependencyInjection
+public static class ServicesDependencyInjection
 {
     public static void AddProjectServices(this IServiceCollection services, IConfiguration configuration)
     {
@@ -14,6 +16,8 @@ public static class ProjectDependencyInjection
         services.AddScoped<IFileService, FileService>();
 
         services.AddHttpClient<IFileService, FileService>();
+
+        services.Configure<MongoDbConfiguration>(configuration.GetSection("MongoDb"));
 
         ConfigureSerilog();
     }

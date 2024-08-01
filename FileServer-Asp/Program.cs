@@ -1,4 +1,4 @@
-using FileServer_Asp.DependencyInjection;
+using FileServer_Asp.DependencyInjections.ServicesDI;
 
 var builder = WebApplication.CreateBuilder(args);
 
