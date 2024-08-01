@@ -2,7 +2,6 @@ using FileServer_Asp.Configurations;
 using FileServer_Asp.Services;
 using FileServer_Asp.Services.Abstract;
 using Serilog;
-using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +14,7 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddHttpClient<IFileService, FileService>();
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Warning()
+    .MinimumLevel.Information()
     .WriteTo.Console()
     .CreateLogger();
 
