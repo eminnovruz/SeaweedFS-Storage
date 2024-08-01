@@ -5,6 +5,6 @@ namespace FileServer_Asp.Services.Abstract;
 
 public interface IFileRegisterService
 {
-    public Task<bool> RegisterFile(FileModel fileToUpload);
+    public Task RegisterFile(FileModel fileToUpload, string fid);
     public Task<AssignJsonModel> ViewFileViaSecretName(string secretName);
 }

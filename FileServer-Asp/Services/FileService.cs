@@ -14,13 +14,17 @@ namespace FileServer_Asp.Services
         private readonly SeaweedConfiguration _config;
         private readonly SeaweedFsHelper _helper;
 
-        public FileService(HttpClient httpClient, IOptions<SeaweedConfiguration> seaweedConfig)
+        private readonly IFileRegisterService _registerService;
+
+        public FileService(HttpClient httpClient, IOptions<SeaweedConfiguration> seaweedConfig, IFileRegisterService registerService)
         {
             _config = seaweedConfig.Value;
 
             _httpClient = new HttpClient();
 
             _helper = new SeaweedFsHelper();
+
+            _registerService = registerService;
         }
 
         public Task<string> ReadFileAsync(string fidId)
@@ -80,6 +84,8 @@ namespace FileServer_Asp.Services
             var response = await _httpClient.PostAsync(assignedUrl, content);
 
             response.EnsureSuccessStatusCode();
+
+            await _registerService.RegisterFile(fileToUpload, assign.Fid);
 
             Log.Information("File uploaded successfully - Assign Fid: " + assign.Fid);
 
