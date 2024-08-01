@@ -1,9 +1,6 @@
-﻿using System.IO;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
-using System.Security.Cryptography.Xml;
 
 namespace FileServer_Asp.Controllers
 {
