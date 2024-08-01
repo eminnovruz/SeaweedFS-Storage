@@ -2,5 +2,8 @@
 
 public class BaseEntity
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public string Id { get; set; }
 }

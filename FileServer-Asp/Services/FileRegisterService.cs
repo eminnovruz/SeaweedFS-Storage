@@ -44,7 +44,7 @@ public class FileRegisterService : IFileRegisterService
 
         if (existingEntity != null)
         {
-            throw new ExistingAssignException("There is another assign with the given secret name");
+            throw new ExistingAssignException();
         }
 
         var newEntity = new AssignEntity

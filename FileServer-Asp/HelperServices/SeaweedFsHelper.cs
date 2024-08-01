@@ -5,8 +5,6 @@ namespace FileServer_Asp.HelperServices;
 
 public class SeaweedFsHelper
 {
-    private readonly string _assignUrl = @"\dir\assign";
-
     public async Task<AssignJsonModel> GenerateFidAsync(HttpClient _client, string masterUrl)
     {
         HttpResponseMessage response = await _client.GetAsync("http://localhost:9333/dir/assign");
