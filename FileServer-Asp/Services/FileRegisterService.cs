@@ -3,6 +3,7 @@ using FileServer_Asp.Entities;
 using FileServer_Asp.JsonModels;
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
+using MongoDB.Driver;
 
 namespace FileServer_Asp.Services;
 
@@ -25,8 +26,10 @@ public class FileRegisterService : IFileRegisterService
         });
     }
 
-    public Task<AssignJsonModel> ViewFileViaSecretName(string secretName)
+    public async Task<AssignEntity> ViewFileViaSecretName(string secretName)
     {
-        throw new NotImplementedException();
+        FilterDefinition<AssignEntity> filter = Builders<AssignEntity>.Filter.Eq(f => f.SecretName, secretName);
+
+        return await _context.Assigns.Find(filter).FirstOrDefaultAsync();
     }
 }
