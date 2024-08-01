@@ -13,7 +13,7 @@ public class FileRegisterService : IFileRegisterService
         throw new NotImplementedException();
     }
 
-    public Task<AssignModel> ViewFileViaSecretName(string secretName)
+    public Task<AssignJsonModel> ViewFileViaSecretName(string secretName)
     {
         throw new NotImplementedException();
     }

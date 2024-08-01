@@ -2,7 +2,7 @@
 
 namespace FileServer_Asp.JsonModels;
 
-public class AssignModel
+public class AssignJsonModel
 {
     [JsonPropertyName("fid")]
     public string Fid { get; set; }

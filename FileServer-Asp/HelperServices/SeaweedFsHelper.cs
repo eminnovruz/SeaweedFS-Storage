@@ -7,7 +7,7 @@ public class SeaweedFsHelper
 {
     private readonly string _assignUrl = @"\dir\assign";
 
-    public async Task<AssignModel> GenerateFidAsync(HttpClient _client, string masterUrl)
+    public async Task<AssignJsonModel> GenerateFidAsync(HttpClient _client, string masterUrl)
     {
         HttpResponseMessage response = await _client.GetAsync("http://localhost:9333/dir/assign");
         
@@ -15,7 +15,7 @@ public class SeaweedFsHelper
         {
             string jsonResponse = await response.Content.ReadAsStringAsync();
 
-            AssignModel assign = JsonSerializer.Deserialize<AssignModel>(jsonResponse);
+            AssignJsonModel assign = JsonSerializer.Deserialize<AssignJsonModel>(jsonResponse);
             
             return assign;
         }

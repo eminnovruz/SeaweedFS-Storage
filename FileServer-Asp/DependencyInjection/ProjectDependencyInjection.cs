@@ -1,4 +1,4 @@
-﻿using FileServer_Asp.Configurations;
+﻿using FileServer_Asp.Configurations.SeaweedFs;
 using FileServer_Asp.Services;
 using FileServer_Asp.Services.Abstract;
 using Serilog;

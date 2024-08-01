@@ -1,4 +1,4 @@
-﻿namespace FileServer_Asp.Configurations;
+﻿namespace FileServer_Asp.Configurations.SeaweedFs;
 
 public class SeaweedConfiguration
 {

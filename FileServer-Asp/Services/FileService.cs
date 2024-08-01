@@ -1,4 +1,4 @@
-﻿using FileServer_Asp.Configurations;
+﻿using FileServer_Asp.Configurations.SeaweedFs;
 using FileServer_Asp.HelperServices;
 using FileServer_Asp.JsonModels;
 using FileServer_Asp.Models;
@@ -52,14 +52,14 @@ namespace FileServer_Asp.Services
 
         }
 
-        public async Task<AssignModel> UploadFileAsync(FileModel fileToUpload)
+        public async Task<AssignJsonModel> UploadFileAsync(FileModel fileToUpload)
         {
             if(fileToUpload == null)
             {
                 throw new ApplicationException("No file is given.");
             }
 
-            AssignModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
+            AssignJsonModel assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
 
             if(assign == null)
             {
