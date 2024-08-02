@@ -19,12 +19,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-var ipListJson = app.Configuration["ipwhitelist"];
-var allowedIps = JsonSerializer.Deserialize<string[]>(ipListJson);
-
 app.Use(async (context, next) =>
 {
-    var middleware = new IpWhitelistMiddleWare(next, allowedIps);
+    var middleware = new IpWhitelistMiddleWare(next, app);
     await middleware.InvokeAsync(context);
 });
 

@@ -1,4 +1,6 @@
-﻿namespace FileServer_Asp.Middlewares;
+﻿using System.Text.Json;
+
+namespace FileServer_Asp.Middlewares;
 
 public class IpWhitelistMiddleWare
 {
@@ -9,10 +11,11 @@ public class IpWhitelistMiddleWare
     {
     }
 
-    public IpWhitelistMiddleWare(RequestDelegate next, string[] allowedIps)
+    public IpWhitelistMiddleWare(RequestDelegate next, WebApplication app)
     {
         _next = next;
-        _allowedIps = allowedIps;
+
+        Load(app);
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -29,5 +32,11 @@ public class IpWhitelistMiddleWare
         }
 
         await _next(context);
+    }
+
+    private void Load(WebApplication app)
+    {
+        var ipListJson = app.Configuration["ipwhitelist"];
+        var allowedIps = JsonSerializer.Deserialize<string[]>(ipListJson);
     }
 }
