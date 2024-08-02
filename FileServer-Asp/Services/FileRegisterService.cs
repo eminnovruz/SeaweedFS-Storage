@@ -79,8 +79,10 @@ public class FileRegisterService : IFileRegisterService
             throw new ArgumentException("Secret name cannot be null or empty", nameof(secretName));
         }
 
-        var filter = Builders<AssignEntity>.Filter.Eq(f => f.SecretName, secretName);
+        FilterDefinition<AssignEntity> filter = Builders<AssignEntity>.Filter.Eq(f => f.SecretName, secretName);
 
-        return await _context.Assigns.Find(filter).FirstOrDefaultAsync();
+        AssignEntity assign = await _context.Assigns.Find(filter).FirstOrDefaultAsync();
+
+        return assign;
     }
 }

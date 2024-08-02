@@ -11,11 +11,9 @@ public class IpWhitelistMiddleWare
     {
     }
 
-    public IpWhitelistMiddleWare(RequestDelegate next, WebApplication app)
+    public IpWhitelistMiddleWare(RequestDelegate next)
     {
         _next = next;
-
-        Load(app);
     }
 
     public async Task InvokeAsync(HttpContext context)
@@ -34,9 +32,5 @@ public class IpWhitelistMiddleWare
         await _next(context);
     }
 
-    private void Load(WebApplication app)
-    {
-        var ipListJson = app.Configuration["ipwhitelist"];
-        var allowedIps = JsonSerializer.Deserialize<string[]>(ipListJson);
-    }
+    
 }

@@ -1,4 +1,3 @@
-
 using FileServer_Asp.DependencyInjections;
 using FileServer_Asp.Middlewares;
 using System.Text.Json;
@@ -19,11 +18,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.Use(async (context, next) =>
-{
-    var middleware = new IpWhitelistMiddleWare(next, app);
-    await middleware.InvokeAsync(context);
-});
+//var ipListJson = app.Configuration["ipwhitelist"];
+//var allowedIps = JsonSerializer.Deserialize<string[]>(ipListJson);
+
+//app.Use(async (context, next) =>
+//{
+//    var middleware = new IpWhitelistMiddleWare(next);
+//    await middleware.InvokeAsync(context);
+//});
 
 app.UseHttpsRedirection();
 

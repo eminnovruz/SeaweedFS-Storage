@@ -5,9 +5,11 @@ namespace FileServer_Asp.HelperServices;
 
 public class SeaweedFsHelper
 {
+
+
     public async Task<AssignJsonModel> GenerateFidAsync(HttpClient _client, string masterUrl)
     {
-        HttpResponseMessage response = await _client.GetAsync("http://localhost:9333/dir/assign");
+        HttpResponseMessage response = await _client.GetAsync($"{masterUrl}/dir/assign");
         
         if(response.IsSuccessStatusCode)
         {
