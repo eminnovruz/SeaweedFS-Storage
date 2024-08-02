@@ -2,57 +2,55 @@
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
 
-namespace FileServer_Asp.Controllers
+namespace FileServer_Asp.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class FileController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class FileController : ControllerBase
+    private readonly IFileService _fileService;
+
+    public FileController(IFileService fileService)
     {
-        private readonly IFileService _fileService;
+        _fileService = fileService;
+    }
 
-        public FileController(IFileService fileService)
+    [HttpPost("Upload")]
+    public async Task<IActionResult> UploadFile([FromForm] FileModel fileToUpload)
+    {
+        try
         {
-            _fileService = fileService;
+            return Ok(await _fileService.UploadFileAsync(fileToUpload));
         }
-
-        [HttpPost("Upload")]
-        public async Task<IActionResult> UploadFile([FromForm] FileModel fileToUpload)
+        catch (Exception exception)
         {
-            try
-            {
-                return Ok(await _fileService.UploadFileAsync(fileToUpload));
-            }
-            catch (Exception exception)
-            {
-                throw new Exception(exception.Message);
-            }
+            throw new Exception(exception.Message);
         }
+    }
 
-        [HttpGet("ViewFileViaSecret/{secret}")]
-        public async Task<IActionResult> ViewFileViaSecret(string secret)
+    [HttpGet("ViewFileViaSecret/{secret}")]
+    public async Task<IActionResult> ViewFileViaSecret(string secret)
+    {
+        try
         {
-            try
-            {
-                return Ok(await _fileService.ReadFileViaSecretNameAsync(secret));
-            }
-            catch (Exception exception)
-            {
-                throw new ArgumentNullException(exception.Message);
-            }
+            return Ok(await _fileService.ReadFileViaSecretNameAsync(secret));
         }
-
-        [HttpDelete("Delete/{fid}")]
-        public async Task<IActionResult> RemoveFile(string fid)
+        catch (Exception exception)
         {
-            try
-            {
-                return Ok(await _fileService.RemoveFileAsync(fid));
-            }
-            catch (Exception exception)
-            {
-                throw new Exception(exception.Message);
-            }
+            throw new ArgumentNullException(exception.Message);
         }
+    }
 
+    [HttpDelete("Delete/{fid}")]
+    public async Task<IActionResult> RemoveFile(string fid)
+    {
+        try
+        {
+            return Ok(await _fileService.RemoveFileAsync(fid));
+        }
+        catch (Exception exception)
+        {
+            throw new Exception(exception.Message);
+        }
     }
 }
