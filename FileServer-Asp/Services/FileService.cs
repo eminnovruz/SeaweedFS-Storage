@@ -35,15 +35,6 @@ public class FileService : IFileService
         _registerService = registerService ?? throw new ArgumentNullException(nameof(registerService));
     }
 
-    /// <summary>
-    /// Reads a file's content asynchronously by its file identifier.
-    /// </summary>
-    /// <param name="fidId">The file identifier.</param>
-    /// <returns>A task representing the asynchronous operation.</returns>
-    public Task<string> ReadFileAsync(string fidId)
-    {
-        throw new NotImplementedException();
-    }
 
     /// <summary>
     /// Reads the file's public URL via the secret name asynchronously.
