@@ -38,16 +38,16 @@ public class FileRegisterService : IFileRegisterService
             throw new ArgumentNullException(nameof(fileToUpload));
         }
 
-        var filter = Builders<AssignEntity>.Filter.Eq(a => a.SecretName, fileToUpload.SecretName);
+        FilterDefinition<AssignEntity> filter = Builders<AssignEntity>.Filter.Eq(a => a.SecretName, fileToUpload.SecretName);
 
-        var existingEntity = await _context.Assigns.Find(filter).FirstOrDefaultAsync();
+        AssignEntity existingEntity = await _context.Assigns.Find(filter).FirstOrDefaultAsync();
 
         if (existingEntity != null)
         {
             throw new ExistingAssignException();
         }
 
-        var newEntity = new AssignEntity
+        AssignEntity newEntity = new AssignEntity
         {
             Id = Guid.NewGuid().ToString(),
             SecretName = fileToUpload.SecretName,
@@ -56,6 +56,15 @@ public class FileRegisterService : IFileRegisterService
         };
 
         await _context.Assigns.InsertOneAsync(newEntity);
+    }
+
+    public async Task<bool> RemoveFile(string fid)
+    {
+        FilterDefinition<AssignEntity> filter = Builders<AssignEntity>.Filter.Eq(a => a.Fid, fid);
+
+        DeleteResult result = await _context.Assigns.DeleteOneAsync(filter);
+
+        return result.IsAcknowledged;
     }
 
     /// <summary>

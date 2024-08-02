@@ -23,4 +23,6 @@ public interface IFileRegisterService
     /// <param name="secretName">The secret name of the file.</param>
     /// <returns>A task representing the asynchronous operation. The task result contains the assign entity, or null if not found.</returns>
     Task<AssignEntity> ViewFileViaSecretName(string secretName);
+
+    Task<bool> RemoveFile(string fid);
 }

@@ -27,8 +27,11 @@ public class FileService : IFileService
     public FileService(HttpClient httpClient, IOptions<SeaweedConfiguration> seaweedConfig, IFileRegisterService registerService)
     {
         _config = seaweedConfig?.Value ?? throw new ArgumentNullException(nameof(seaweedConfig));
+
         _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+
         _helper = new SeaweedFsHelper();
+
         _registerService = registerService ?? throw new ArgumentNullException(nameof(registerService));
     }
 
@@ -76,7 +79,10 @@ public class FileService : IFileService
 
         if (response.IsSuccessStatusCode)
         {
+            bool result = await _registerService.RemoveFile(fidId);
+
             Log.Information("File removed successfully - Assign Fid: " + fidId);
+            
             return true;
         }
         else
