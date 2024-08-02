@@ -14,9 +14,4 @@ public class FileModel
     /// Gets or sets the file to be uploaded.
     /// </summary>
     public IFormFile File { get; set; }
-
-    /// <summary>
-    /// Gets or sets the port associated with the file upload.
-    /// </summary>
-    public string Port { get; set; }
 }

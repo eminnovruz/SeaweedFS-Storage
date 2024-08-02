@@ -28,19 +28,6 @@ namespace FileServer_Asp.Controllers
             }
         }
 
-        [HttpGet("ViewFile/{fid}")]
-        public async Task<IActionResult> ViewFile(string fid)
-        {
-            try
-            {
-                return Ok(await _fileService.ReadFileAsync(fid));
-            }
-            catch (Exception exception)
-            {
-                throw new ArgumentNullException(exception.Message);
-            }
-        }
-
         [HttpGet("ViewFileViaSecret/{secret}")]
         public async Task<IActionResult> ViewFileViaSecret(string secret)
         {

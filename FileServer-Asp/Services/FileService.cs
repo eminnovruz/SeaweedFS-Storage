@@ -64,7 +64,7 @@ public class FileService : IFileService
             throw new ArgumentNullException(nameof(fidId), "No Fid Id is provided.");
         }
 
-        var assignedUrl = $"{_config.HelperBaseUrl}8080/{fidId}";
+        var assignedUrl = $"{_config.HelperBaseUrl}/{fidId}";
 
         var response = await _httpClient.DeleteAsync(assignedUrl);
 
@@ -102,7 +102,7 @@ public class FileService : IFileService
             throw new ArgumentNullException(nameof(assign), "Failed to generate file identifier.");
         }
 
-        var assignedUrl = $"{_config.HelperBaseUrl}{fileToUpload.Port}/{assign.Fid}";
+        var assignedUrl = $"{_config.HelperBaseUrl}/{assign.Fid}";
 
         using var content = new MultipartFormDataContent();
         using var stream = fileToUpload.File.OpenReadStream();
