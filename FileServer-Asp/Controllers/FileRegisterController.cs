@@ -1,5 +1,6 @@
 ﻿using FileServer_Asp.Services.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace FileServer_Asp.Controllers
 {
@@ -23,7 +24,8 @@ namespace FileServer_Asp.Controllers
             }
             catch (Exception exception)
             {
-                throw new Exception(exception.Message);
+                Log.Error(exception.Message);
+                return BadRequest(exception.Message);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FileServer_Asp.Models;
 using FileServer_Asp.Services.Abstract;
+using Serilog;
 
 namespace FileServer_Asp.Controllers;
 
@@ -24,7 +25,8 @@ public class FileController : ControllerBase
         }
         catch (Exception exception)
         {
-            throw new Exception(exception.Message);
+            Log.Error(exception.Message);
+            return BadRequest(exception.Message);
         }
     }
 
@@ -37,7 +39,8 @@ public class FileController : ControllerBase
         }
         catch (Exception exception)
         {
-            throw new ArgumentNullException(exception.Message);
+            Log.Error(exception.Message);
+            return BadRequest(exception.Message);
         }
     }
 
@@ -50,7 +53,8 @@ public class FileController : ControllerBase
         }
         catch (Exception exception)
         {
-            throw new Exception(exception.Message);
+            Log.Error(exception.Message);
+            return BadRequest(exception.Message);
         }
     }
 }
