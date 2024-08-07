@@ -73,7 +73,7 @@ public class FileService : IFileService
             bool result = await _registerService.RemoveFile(fidId);
 
             Log.Information("File removed successfully - Assign Fid: " + fidId);
-            
+
             return true;
         }
         else
@@ -93,6 +93,16 @@ public class FileService : IFileService
         if (fileToUpload == null)
         {
             throw new ApplicationException("No file is given.");
+        }
+
+        List<string> unwantedExtension = new List<string>()
+        {
+            ".txt", ".pdf", ".avif"
+        };
+
+        if (unwantedExtension.Contains(Path.GetExtension(fileToUpload.File.FileName)))
+        {
+            throw new BadHttpRequestException("File extension is not allowed");
         }
 
         var assign = await _helper.GenerateFidAsync(_httpClient, _config.MasterUrl);
